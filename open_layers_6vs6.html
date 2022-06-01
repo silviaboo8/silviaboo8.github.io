@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<head>
+	<meta charset="utf-8">
+	<script src="https://openlayers.org/en/v4.6.5/build/ol.js"></script>
+	<link rel="stylesheet"  href="https://openlayers.org/en/v4.6.5/css/ol.css" type="text/css">
+
+	<style>
+		#mibloquemapa {
+		width: 90%;
+		height: 600px;
+		box-shadow: 10px 10px 10px rgb(255,0,0);
+		}
+		.ol-mouse-position {
+			font-size:18px;
+			font-family: Arial black;
+			color: rgb(255,0,0);
+			top:5px;
+			right:5px;
+			position:absolute;
+		}
+	</style>
+</head>
+<body>
+	<h1>Archivo: Open_layers_6vs6.html</h1>
+	<div id='mibloquemapa'></div>
+
+	<script>
+		var controles = ol.control.defaults().extend([
+			new ol.control.FullScreen(),
+			new ol.control.ZoomSlider(),
+			new ol.control.ScaleLine(),
+			new ol.control.ZoomToExtent(),
+			new ol.control.MousePosition({projection: 'EPSG:4326', coordinateFormat: function(coordinate) { return ol.coordinate.format(coordinate, '{y}, {x}', 6); }
+		}),
+			]);
+		var CapaBase= new ol.layer.Tile ({source: new ol.source.OSM()});
+		var fuente1 = new ol.source.Vector ({
+			format: new ol.format.GeoJSON(),
+				url:'http://localhost:8080/geoserver/www/Municipio_Lineal.geojson'
+			});
+		var fuente2 = new ol.source.Vector ({
+			format: new ol.format.GeoJSON(),
+				url:'http://localhost:8080/geoserver/www/Mojones_puntual.geojson'
+			});
+		var fuente3 = new ol.source.Vector ({
+			format: new ol.format.GeoJSON(),
+				url:'http://localhost:8080/geoserver/www/Concejos_Superficial.geojson'
+			});
+		var fuente4 = new ol.source.Vector ({
+			format: new ol.format.GeoJSON(),
+				url:'http://localhost:8080/geoserver/www/Concejos_Lineal.geojson'
+			});
+		var capa_superficial= new ol.layer.Vector ({
+				title:'Concejos',
+				source: fuente3,
+				projection: 'EPSG:4326',
+			});
+		var capa_lineal1= new ol.layer.Vector ({
+ 				title:'Municipio',
+ 				source: fuente1,
+ 				projection: 'EPSG:4326',
+			});
+		var capa_lineal2= new ol.layer.Vector ({
+ 				title:'Limite concejos',
+ 				source: fuente4,
+ 				projection: 'EPSG:4326',
+			});
+		var capa_puntual1= new ol.layer.Vector ({
+ 				title:'Mojones',
+ 				source: fuente2, 
+ 				projection: 'EPSG:4326',
+			});
+		var lavista= new ol.View({ center: ol.proj.fromLonLat([-2.674246,42.839311]),
+									zoom: 10});
+		var mimapa = new ol.Map({
+			target: 'mibloquemapa',
+			layers: [CapaBase,capa_superficial,capa_lineal1,capa_lineal2,capa_puntual1],
+			view: lavista,
+			controls: controles,
+			});
+		
+</script>		
+</body>
+</html>

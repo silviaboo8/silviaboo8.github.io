@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.14.1/css/ol.css" type="text/css">
+	<script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.14.1/build/ol.js"></script>
+
+	<style>
+	.mibloque {
+	width: 90%;
+	height: 600px;
+	box-shadow: 50px 50px 50px rgb(255,0,0);
+	}
+	</style>
+
+</head>
+<body>
+	<h1>Archivo: Open_layers_4.html</h1>
+	<div id= "mibloquemapa" class="mibloque"></div>
+	<script type="text/javascript">
+		var miprimeracapa= new ol.layer.Tile ({ source: new ol.source.OSM()});
+		var lavista= new ol.View({ center: ol.proj.fromLonLat([-2.674246,42.839311]), zoom: 20});
+
+		var mimapa= new ol.Map({
+			target: 'mibloquemapa',
+			layers: [miprimeracapa],
+			view: lavista
+			});
+
+		lavista.setZoom(1);
+</script>
+</body>
+</html>
